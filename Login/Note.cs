@@ -15,8 +15,8 @@ namespace Login
 
         public override string ToString()
         {
-            return "note: " + note_title + ", " + "note id: " + note_id + "Tag: " + tag;
-            //return note_title;
+            //return "note: " + note_title + ", " + "note id: " + note_id + "Tag: " + tag;
+            return note_title;
         }
     }
 }

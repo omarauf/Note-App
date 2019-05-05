@@ -113,7 +113,7 @@
             this.txtLogPassword.PasswordChar = '*';
             this.txtLogPassword.Size = new System.Drawing.Size(219, 22);
             this.txtLogPassword.TabIndex = 10;
-            this.txtLogPassword.Text = "omar";
+            this.txtLogPassword.Text = "Password";
             this.txtLogPassword.Enter += new System.EventHandler(this.removePlaceholder);
             this.txtLogPassword.Leave += new System.EventHandler(this.writePlaceholder);
             // 
@@ -147,7 +147,7 @@
             this.txtLogEmail.Name = "txtLogEmail";
             this.txtLogEmail.Size = new System.Drawing.Size(219, 22);
             this.txtLogEmail.TabIndex = 7;
-            this.txtLogEmail.Text = "omar";
+            this.txtLogEmail.Text = "Email";
             this.txtLogEmail.Enter += new System.EventHandler(this.removePlaceholder);
             this.txtLogEmail.Leave += new System.EventHandler(this.writePlaceholder);
             // 

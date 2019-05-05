@@ -37,7 +37,7 @@ namespace Login
 
             if (user.Error) //we have an error show this error
             {
-                //MessageBox.Show(user.Error_msg);
+                MessageBox.Show(user.Error_msg);
                 Console.WriteLine("\n Error message :\n{0}", user.Error_msg);
                 this.Enabled = true;
             }
@@ -64,8 +64,8 @@ namespace Login
 
             if (user.Error) //we have an error show this error
             {
-                //MessageBox.Show(user.Error_msg);
-                Console.WriteLine("\nError message :\n{0}", user.Error_msg);
+                MessageBox.Show(user.Error_msg);
+                //Console.WriteLine("\nError message :\n{0}", user.Error_msg);
                 this.Enabled = true;
             }
             else //no error open form 2 and close form 1

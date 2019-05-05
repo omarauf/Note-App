@@ -124,7 +124,7 @@ class DB_Functions {
 
     
 
-/**
+    /**
      * update note in database by note id //UPDATE `notes` SET `note`= "ascsa", `note_title` = "ascas" WHERE `note_id` = 5 LIMIT 1
      */
      public function duplicateNote($note_id) {
@@ -161,20 +161,10 @@ class DB_Functions {
     public function addNoteByUserId($userId) {
         //INSERT INTO `notes`(`user_id`, `note`) VALUES (3, "smnsknk")
         $temp = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\fonttbl{\\f0\\fnil\\fcharset0 Microsoft Sans Serif;}}\\viewkind4\\uc1\\pard\\f0\\fs17 New Note\\par}";
-        $stms = $this->conn->prepare("INSERT INTO `notes`(`user_id`, `note_title`, `note`, `tag`) VALUES (?, 'new Note', ?, new)");
+        $stms = $this->conn->prepare("INSERT INTO `notes`(`user_id`, `note_title`, `note`, `tag`) VALUES (?, 'new Note', ?, 'new')");
         $stms->bind_param("is", $userId, $temp);
         $stms->execute();
         $stms->close();
-
-        //SELECT `note_id` FROM `notes` WHERE `user_id` = 3 ORDER BY `note_id` DESC LIMIT 1
-        /*$stmt = $this->conn->prepare("SELECT `note_id` FROM `notes` WHERE `user_id` = ? ORDER BY `note_id` DESC LIMIT 1");
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $note = $stmt->get_result()->fetch_assoc();
-        $stmt->close();
-
-        return $note["note_id"];*/
-
     }
 
     /**

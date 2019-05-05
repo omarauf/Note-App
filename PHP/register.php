@@ -25,7 +25,6 @@
                 
                 //redierct to Note Page
                 //header("Location: Note.php");
-
                 // user stored successfully
                 //add default note
                 $db->addNoteByUserId($user["id"]);
