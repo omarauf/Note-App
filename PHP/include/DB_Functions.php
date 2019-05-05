@@ -107,34 +107,10 @@ class DB_Functions {
     }
 	
 	/**
-     * get notes to update list view note in Note.php
-     * noteIDToBeActive == -1 activate first Note
-     */
-    public function updateNoteListView($userId, $noteIDToBeActive){
-        $db = new DB_Functions();
-        $dbNotes = $db->getNotesByUserID($userId);
-        $notes = "";
-        $array_notes = array();
-        $counter = 1;
-        foreach($dbNotes as $row => $innerArray){
-            $array_notes[$innerArray["note_id"]] = $innerArray["note"];
-            if($noteIDToBeActive == $innerArray["note_id"] ){
-                $notes .= '<a href="#" class="list-group-item list-group-item-action active" id="'.$innerArray["note_id"].'" name="'.$innerArray["note"].'">'.'Note '.$counter.'</a>';
-            }else if($noteIDToBeActive == -1 && $counter == 1){
-                $notes .= '<a href="#" class="list-group-item list-group-item-action active" id="'.$innerArray["note_id"].'" name="'.$innerArray["note"].'">'.'Note '.$counter.'</a>';
-            }else {
-                $notes .= '<a href="#" class="list-group-item list-group-item-action" id="'.$innerArray["note_id"].'" name="'.$innerArray["note"].'">'.'Note '.$counter.'</a>';
-            }
-            $counter++;
-        }
-        return $notes;
-    }
-    
-	/**
      * Get note and it's id by use id
      */
     public function getNotesByUserID($userId) {
-        $stms = $this->conn->prepare("SELECT `note_id`, `note_title`, `note` FROM `notes` WHERE user_id = ?");
+        $stms = $this->conn->prepare("SELECT `note_id`, `note_title`, `note`, `tag` FROM `notes` WHERE user_id = ?");
         $stms->bind_param("i", $userId);
         if ($stms->execute()) {
 			$result = $stms->get_result();
@@ -146,12 +122,24 @@ class DB_Functions {
          } 
     }
 
+    
+
+/**
+     * update note in database by note id //UPDATE `notes` SET `note`= "ascsa", `note_title` = "ascas" WHERE `note_id` = 5 LIMIT 1
+     */
+     public function duplicateNote($note_id) {
+        $stms = $this->conn->prepare("INSERT INTO `notes`(`user_id`, `note_title`, `note`, `tag`) SELECT `user_id`, `note_title`, `note`, `tag` FROM `notes` WHERE `note_id` = ?");
+        $stms->bind_param("i", $note_id);
+        $stms->execute();
+        $stms->close();
+    }
+
     /**
      * update note in database by note id //UPDATE `notes` SET `note`= "ascsa", `note_title` = "ascas" WHERE `note_id` = 5 LIMIT 1
      */
-    public function updateNoteByNoteID($id, $newNote, $newNoteTitle) {
-        $stms = $this->conn->prepare("UPDATE `notes` SET `note`= ?, `note_title` = ? WHERE `note_id` = ? LIMIT 1");
-        $stms->bind_param("ssi", $newNote, $newNoteTitle, $id);
+    public function updateNoteByNoteID($id, $newNote, $newNoteTitle, $newTag) {
+        $stms = $this->conn->prepare("UPDATE `notes` SET `note`= ?, `note_title` = ?, `tag` = ? WHERE `note_id` = ? LIMIT 1");
+        $stms->bind_param("sssi", $newNote, $newNoteTitle, $newTag, $id);
         $stms->execute();
         $stms->close();
     }
@@ -173,7 +161,7 @@ class DB_Functions {
     public function addNoteByUserId($userId) {
         //INSERT INTO `notes`(`user_id`, `note`) VALUES (3, "smnsknk")
         $temp = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\fonttbl{\\f0\\fnil\\fcharset0 Microsoft Sans Serif;}}\\viewkind4\\uc1\\pard\\f0\\fs17 New Note\\par}";
-        $stms = $this->conn->prepare("INSERT INTO `notes`(`user_id`, `note_title`, `note`) VALUES (?, 'new Note', ?)");
+        $stms = $this->conn->prepare("INSERT INTO `notes`(`user_id`, `note_title`, `note`, `tag`) VALUES (?, 'new Note', ?, new)");
         $stms->bind_param("is", $userId, $temp);
         $stms->execute();
         $stms->close();
@@ -189,24 +177,6 @@ class DB_Functions {
 
     }
 
-    public function saveJSON($json) {
-        //INSERT INTO `notes`(`user_id`, `note`) VALUES (3, "smnsknk")
-        $stms = $this->conn->prepare("INSERT INTO `temp`(`json`) VALUES (?)");
-        $stms->bind_param("s", $json);
-        $stms->execute();
-        $stms->close();
-
-        //SELECT `note_id` FROM `notes` WHERE `user_id` = 3 ORDER BY `note_id` DESC LIMIT 1
-        /*$stmt = $this->conn->prepare("SELECT `note_id` FROM `notes` WHERE `user_id` = ? ORDER BY `note_id` DESC LIMIT 1");
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $note = $stmt->get_result()->fetch_assoc();
-        $stmt->close();
-
-        return $note["note_id"];*/
-
-    }
- 
     /**
      * Encrypting password
      * @param password

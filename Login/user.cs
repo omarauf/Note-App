@@ -19,6 +19,5 @@ namespace Login
             return "Name: " + Name + ", " + "Email: " + Email + ", " + "Id: " + Id;
         }
 
-
     }
 }

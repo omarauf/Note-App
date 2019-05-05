@@ -10,7 +10,7 @@
         $json = $_POST['json'];     //all notes as json
         $arr = json_decode($json, true);    //convert json to array
         foreach ($arr["notes"] as $key => $value) {
-            $db->updateNoteByNoteID($value['note_id'], $value['note'], $value['note_title']);
+            $db->updateNoteByNoteID($value['note_id'], $value['note'], $value['note_title'], $value['tag']);
         }
         $response["notes"] = $db->getNotesByUserID($user_id);
         echo json_encode($response);
@@ -47,4 +47,18 @@
         $response["notes"] = $db->getNotesByUserID($user_id);
         echo json_encode($response);
     }
+    
+    //duplicateNote 
+    if (isset($_POST['user_id']) && isset($_POST['note_id']) && $_POST['request'] === 'duplicateNote') {    // edit by omar
+    
+        // receiving the post params
+        $note_id = $_POST['note_id'];    //note id
+        $user_id = $_POST['user_id'];    //user id
+        $db->duplicateNote($note_id);
+        //bring all note with note new note
+        $response["notes"] = $db->getNotesByUserID($user_id);
+        echo json_encode($response);
+    }
+
+    
 ?>

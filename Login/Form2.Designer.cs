@@ -32,6 +32,9 @@
             this.noteSideBar = new System.Windows.Forms.ListBox();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.changeNoteTittleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,9 +52,9 @@
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewRTFCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.duplicateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtTag = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.uploadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -59,13 +62,14 @@
             // 
             // noteSideBar
             // 
+            this.noteSideBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.noteSideBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(228)))), ((int)(((byte)(230)))));
             this.noteSideBar.ContextMenuStrip = this.contextMenuStrip2;
-            this.noteSideBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.noteSideBar.FormattingEnabled = true;
-            this.noteSideBar.Location = new System.Drawing.Point(0, 24);
+            this.noteSideBar.Location = new System.Drawing.Point(0, 50);
             this.noteSideBar.Name = "noteSideBar";
-            this.noteSideBar.Size = new System.Drawing.Size(202, 426);
+            this.noteSideBar.Size = new System.Drawing.Size(202, 407);
             this.noteSideBar.TabIndex = 0;
             this.noteSideBar.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -77,14 +81,35 @@
             this.newNoteToolStripMenuItem,
             this.duplicateToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(181, 114);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(128, 92);
             // 
             // changeNoteTittleToolStripMenuItem
             // 
             this.changeNoteTittleToolStripMenuItem.Name = "changeNoteTittleToolStripMenuItem";
-            this.changeNoteTittleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.changeNoteTittleToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.changeNoteTittleToolStripMenuItem.Text = "Rename";
             this.changeNoteTittleToolStripMenuItem.Click += new System.EventHandler(this.changeNoteTittleToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // newNoteToolStripMenuItem
+            // 
+            this.newNoteToolStripMenuItem.Name = "newNoteToolStripMenuItem";
+            this.newNoteToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.newNoteToolStripMenuItem.Text = "New Note";
+            this.newNoteToolStripMenuItem.Click += new System.EventHandler(this.newNoteToolStripMenuItem_Click);
+            // 
+            // duplicateToolStripMenuItem
+            // 
+            this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
+            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.duplicateToolStripMenuItem.Text = "Duplicate";
+            this.duplicateToolStripMenuItem.Click += new System.EventHandler(this.duplicateToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -95,7 +120,7 @@
             this.insertToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(925, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -160,10 +185,13 @@
             // 
             // noteTextBox
             // 
+            this.noteTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.noteTextBox.ContextMenuStrip = this.contextMenuStrip1;
             this.noteTextBox.Location = new System.Drawing.Point(208, 24);
             this.noteTextBox.Name = "noteTextBox";
-            this.noteTextBox.Size = new System.Drawing.Size(580, 414);
+            this.noteTextBox.Size = new System.Drawing.Size(717, 433);
             this.noteTextBox.TabIndex = 2;
             this.noteTextBox.Text = "";
             this.noteTextBox.TextChanged += new System.EventHandler(this.noteTextBox_TextChanged);
@@ -222,33 +250,30 @@
             this.viewRTFCodeToolStripMenuItem.Text = "View RTF code";
             this.viewRTFCodeToolStripMenuItem.Click += new System.EventHandler(this.viewRTFCodeToolStripMenuItem_Click);
             // 
-            // deleteToolStripMenuItem
+            // txtTag
             // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            this.txtTag.Location = new System.Drawing.Point(0, 24);
+            this.txtTag.Name = "txtTag";
+            this.txtTag.Size = new System.Drawing.Size(202, 20);
+            this.txtTag.TabIndex = 3;
             // 
-            // newNoteToolStripMenuItem
+            // contextMenuStrip3
             // 
-            this.newNoteToolStripMenuItem.Name = "newNoteToolStripMenuItem";
-            this.newNoteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.newNoteToolStripMenuItem.Text = "New Note";
-            this.newNoteToolStripMenuItem.Click += new System.EventHandler(this.newNoteToolStripMenuItem_Click);
+            this.contextMenuStrip3.Name = "contextMenuStrip3";
+            this.contextMenuStrip3.Size = new System.Drawing.Size(61, 4);
             // 
-            // duplicateToolStripMenuItem
+            // uploadFileToolStripMenuItem
             // 
-            this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.duplicateToolStripMenuItem.Text = "Duplicate";
-            this.duplicateToolStripMenuItem.Click += new System.EventHandler(this.duplicateToolStripMenuItem_Click);
+            this.uploadFileToolStripMenuItem.Name = "uploadFileToolStripMenuItem";
+            this.uploadFileToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(925, 458);
+            this.Controls.Add(this.txtTag);
             this.Controls.Add(this.noteTextBox);
             this.Controls.Add(this.noteSideBar);
             this.Controls.Add(this.menuStrip1);
@@ -289,5 +314,8 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newNoteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem duplicateToolStripMenuItem;
+        private System.Windows.Forms.TextBox txtTag;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;
+        private System.Windows.Forms.ToolStripMenuItem uploadFileToolStripMenuItem;
     }
 }

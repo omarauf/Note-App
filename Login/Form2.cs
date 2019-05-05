@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -45,6 +46,12 @@ namespace Login
             noteTextBox.Rtf = listNotes.notes[index].note;
         }
 
+
+        private void imageSideBar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
         #region Menu Strip
 
 
@@ -54,9 +61,11 @@ namespace Login
             this.Enabled = false;
             update(); //update befor crete new note
             NameValueCollection noteInfo = new NameValueCollection();
-            string id = user.Id.ToString();
-            noteInfo.Add("id", id);
-            noteInfo.Add("request", "newNote");
+            string note_id = Convert.ToString(listNotes.notes[noteSideBar.SelectedIndex].note_id);
+            string user_id = user.Id.ToString();
+            noteInfo.Add("note_id", note_id);
+            noteInfo.Add("user_id", user_id);
+            noteInfo.Add("request", "duplicateNote");
             byte[] responseArray = client.UploadValues("http://syiner.com/C/functions.php", "POST", noteInfo);
             String responseString = Encoding.Default.GetString(responseArray);
             listNotes = JsonConvert.DeserializeObject<ListNotes>(responseString);
@@ -81,20 +90,24 @@ namespace Login
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Enabled = false;
-            update(); //update befor crete new note
-            NameValueCollection noteInfo = new NameValueCollection();
-            string note_id = Convert.ToString(listNotes.notes[noteSideBar.SelectedIndex].note_id);
-            string user_id = user.Id.ToString();
-            noteInfo.Add("note_id", note_id);
-            noteInfo.Add("user_id", user_id);
-            noteInfo.Add("request", "deletNote");
-            byte[] responseArray = client.UploadValues("http://syiner.com/C/functions.php", "POST", noteInfo);
-            String responseString = Encoding.Default.GetString(responseArray);
-            listNotes = JsonConvert.DeserializeObject<ListNotes>(responseString);
-            index--;
-            updateNodeSideBar();
-            this.Enabled = true;
+            if (MessageBox.Show("Do you want to delete " + listNotes.notes[noteSideBar.SelectedIndex].note_title + " ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.Enabled = false;
+                update(); //update befor crete new note
+                NameValueCollection noteInfo = new NameValueCollection();
+                string note_id = Convert.ToString(listNotes.notes[noteSideBar.SelectedIndex].note_id);
+                string user_id = user.Id.ToString();
+                noteInfo.Add("note_id", note_id);
+                noteInfo.Add("user_id", user_id);
+                noteInfo.Add("request", "deletNote");
+                byte[] responseArray = client.UploadValues("http://syiner.com/C/functions.php", "POST", noteInfo);
+                String responseString = Encoding.Default.GetString(responseArray);
+                listNotes = JsonConvert.DeserializeObject<ListNotes>(responseString);
+                index--;
+                updateNodeSideBar();
+                this.Enabled = true;
+            }
+           
         }
 
         //renaem
@@ -185,7 +198,7 @@ namespace Login
             noteInfo.Add("id", id);
             noteInfo.Add("json", json);
             noteInfo.Add("request", "update");
-
+            Console.WriteLine(json);
             byte[] responseArray = client.UploadValues("http://syiner.com/C/functions.php", "POST", noteInfo);
             String responseString = Encoding.Default.GetString(responseArray);
             listNotes = JsonConvert.DeserializeObject<ListNotes>(responseString);
@@ -219,6 +232,26 @@ namespace Login
             }
             noteSideBar.SelectedIndex = index;
         }
+
+        /*private void txtTag_TextChanged(object sender, EventArgs e)
+        {
+            noteSideBar.Items.Clear();
+            index = 0;
+            List<Note> tagListNotes = listNotes.notes.Where(note => note.tag == txtTag.Text).ToList();
+
+            Console.WriteLine(tagListNotes.ToString());
+            for (int i = 0; i < tagListNotes.Count(); i++)
+            {
+                String note = tagListNotes.ElementAt(i).ToString();
+                noteSideBar.Items.Add(note);
+            }
+            if (txtTag.Text == "")
+            {
+                updateNodeSideBar();
+            }
+        }*/
+
+
 
 
         /*
